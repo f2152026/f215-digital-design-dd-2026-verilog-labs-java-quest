@@ -40,6 +40,14 @@ module ripple_adder(
     .cout(c2)
   );
 
+  FA_Gate FA3 (
+    .a(a[3]),
+    .b(b[3]),
+    .cin(c3),
+    .sum(sum[3]),
+    .cout(cout)
+  );
+
   FA_Gate FA2 (
     .a(a[2]),
     .b(b[2]),
@@ -48,12 +56,6 @@ module ripple_adder(
     .cout(c3)
   );
 
-  FA_Gate FA3 (
-    .a(a[3]),
-    .b(b[3]),
-    .cin(c3),
-    .sum(sum[3]),
-    .cout(cout)
-  );
+  
 
 endmodule
