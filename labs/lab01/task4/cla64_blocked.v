@@ -21,6 +21,7 @@ module cla64_blocked(
   wire [15:1] c;   // carries BETWEEN blocks: c[1]..c[15]
 
   // TODO: your sixteen cla4 instances go here.
+  // For the sake of testing
 
   cla4 block0 (.a(a[3:0]),    .b(b[3:0]),    .cin(cin),   .sum(sum[3:0]),    .cout(c[1]));
   cla4 block1 (.a(a[7:4]),    .b(b[7:4]),    .cin(c[1]),  .sum(sum[7:4]),    .cout(c[2]));
