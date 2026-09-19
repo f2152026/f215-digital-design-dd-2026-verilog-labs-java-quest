@@ -1,11 +1,16 @@
 // tb.v
-// Starter testbench template -- YOU complete this file.
+// Check every address in an overridden 8-word ROM.
 
 module tb;
 
-  // TODO: declare the inputs and outputs
+  localparam WIDTH = 8;
+  localparam DEPTH = 8;
+  reg [$clog2(DEPTH)-1:0] t_sel;
+  wire [WIDTH-1:0] t_dout;
+  reg [WIDTH-1:0] expected;
+  integer i, errors;
 
-  // TODO: instantiate DUT here
+  lut #(.WIDTH(WIDTH), .DEPTH(DEPTH)) DUT (.sel(t_sel), .dout(t_dout));
 
   // Waveform dump configuration (DO NOT CHANGE)
   string vcd_file;
@@ -17,11 +22,23 @@ module tb;
   end
 
   initial begin
-    // TODO: apply different input combinations
-
+    errors = 0;
+    for (i = 0; i < DEPTH; i = i + 1) begin
+      t_sel = i;
+      expected = i * i;
+      #5;
+      if (t_dout !== expected) begin
+        $display("FAIL at time %0t: sel=%0d got=%0d expected=%0d",
+                 $time, t_sel, t_dout, expected);
+        errors = errors + 1;
+      end
+    end
+    $display("Task 2: %0d/%0d passed; errors=%0d", DEPTH-errors, DEPTH, errors);
+    if (errors != 0) $fatal(1, "ROM checks failed");
+    $finish;
   end
 
   initial
-    $monitor($time, " I0=%b I1=%b S=%b | Y=%b", t_i0, t_i1, t_s, t_y); // change as required
+    $monitor($time, " sel=%0d | dout=%0d", t_sel, t_dout);
 
 endmodule
